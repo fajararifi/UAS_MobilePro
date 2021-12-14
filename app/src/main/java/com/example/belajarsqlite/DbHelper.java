@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String COLUMN_NIM = "nim";
     public static final String COLUMN_NO_HP = "noHp";
     public static final String TABLE_NAME = "mhstb";
+    private SQLiteDatabase db;
 
     public DbHelper(@Nullable Context context) {
         super(context, DB_NAME, null, 1);
@@ -28,6 +30,16 @@ public class DbHelper extends SQLiteOpenHelper {
         String stmt = "CREATE TABLE " + TABLE_NAME + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_NAMA + " TEXT, " + COLUMN_NIM + " TEXT, " + COLUMN_NO_HP + " TEXT)";
         sqLiteDatabase.execSQL(stmt);
     }
+    @Override
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        String createTableQuery = "CREATE TABLE MyTable (" +
+                "id INTEGER PRIMARY KEY," +
+                "name TEXT CHECK(length(name) > 0)," +
+                "age INTEGER CHECK(age > 0)" +
+                ")";
+        db.execSQL(createTableQuery);
+    }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
